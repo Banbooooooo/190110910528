@@ -9,7 +9,7 @@ use('190110910528');
 // Make sure you run it against the correct database and collection.
 //db.sales.drop();
 // Insert a few documents into the sales collection.
-
+db.tappliclassrooms.drop();
 db.tusers.insertMany([
   { username: 'abc', password: '123456', sex: '男', birth: new Date('2001-03-01T08:00:00Z'),department:'YX001',grade:'2019级' },
   { username: 'def', password: '123456', sex: '女', birth: new Date('2002-06-01T08:00:00Z'),department:'YX001',grade:'2020级' },

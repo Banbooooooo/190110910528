@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>课程申请教室列表</title>
+<%- include('script.ejs')%>
+</head>
+<body>
+
+	<div class="container">
+
+		<div id="header"><%- include('header.ejs')%></div>
+
+		<!-- 内容 -->
+		<div class="row" style="margin-top: 10px">
+
+			<div id="left" class="col-lg-2"><%- include('left.ejs')%></div>
+
+			<div class="col-lg-7" style="background-color: #e3f2fd;padding:1rem;text-align:center;">
+			<h4>课程申请教室列表</h4>
+				<div class="card">
+					<div class="card-body">
+						<table class="table">
+							<thead style="background-color: #e3f2fd;">
+								<tr>
+									<th scope="row">序号</th>
+									<th scope="row">课程名称</th>
+									<th scope="row">教室地址</th>
+									<th scope="row">使用时间段</th>
+									<th scope="row">可容纳人数</th>
+								</tr>
+							</thead>
+
+							<tbody>
+                                <% for(var i=0;i<applications.length;i++){ %>
+									<tr id="cla${i.count}">
+										<th scope="row"><%= i+1%></th>
+										<th><%= applications[i].cource[0].name %></th>
+										<td><%= applications[i].classroom[0].address%></td>
+										<td><%= applications[i].usetime%></td>
+										<td><%= applications[i].classroom[0].size%></td>
+										
+									</tr>
+
+                                <% } %>
+							</tbody>
+						</table>
+								<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link" href="#"
+									id="btnp">Previous</a></li>
+								<c:forEach begin="1" end="${Math.ceil(classrooms.size()/5)}" var="i">
+									<li class="page-item"><a class="page-link" href="#"
+										id="btn${i}">${i}</a></li>
+								</c:forEach>
+								<li class="page-item"><a class="page-link" href="#"
+									id="btnn">Next</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+			</div>
+
+            <div id="right" class="col-lg-3"><%- include('right.ejs')%></div>
+		</div>
+
+	</div>
+
+</body>
+<script>
+
+</script>
+</html>

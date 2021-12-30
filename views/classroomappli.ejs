@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>课程申请教室界面</title>
+    <%- include('script.ejs')%>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="header">
+            <%- include('header.ejs')%>
+        </div>
+
+        <!-- 内容 -->
+        <div class="row" style="margin-top: 10px">
+
+            <div id="left" class="col-lg-2">
+                <%- include('left.ejs')%>
+            </div>
+            <div class="col-lg-7" style="background-color: #e3f2fd; padding: 1rem; text-align: center;">
+
+                <h4>课程教室申请</h4>
+                <div class="card">
+                    <div class="card-body" style="padding: 3rem;">
+
+                        <form method="post" action="/appliclassroom" >
+                            <div class="form-group row" style="text-align: center;">
+
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">课程</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="cource">
+                                        <% for(var i=0;i<cources.length;i++) {%>
+                                            <option value="<%= cources[i]._doc._id %>"><%= cources[i]._doc.name %></option>
+                                        <% }%>
+                                    </select>
+                                </div>
+
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">教室</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="classroom">
+                                        <% for(var i=0;i<classrooms.length;i++) {%>
+                                            <option value="<%= classrooms[i]._doc._id %>"><%= classrooms[i]._doc.address %></option>
+                                            <% }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="text-align: center;">
+
+
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">星期</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="time1">
+                                        <option value="Mon">一</option>
+                                        <option value="Tue">二</option>
+                                        <option value="Wed">三</option>
+                                        <option value="Thu">四</option>
+                                        <option value="Fri">五</option>
+                                    </select>
+                                </div>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">节段</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="time2">
+                                        <option value="1-2">08:05-09:25</option>
+                                        <option value="3-5">09:30-12:15</option>
+                                        <option value="6-7">13:30-15:05</option>
+                                        <option value="8-10">15:15-16:50</option>
+                                        <option value="11-13">18:30-20:55</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="text-align: center; padding-top: 2rem;">
+                                <div>
+                                    <input type="submit" value="申请" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="right" class="col-lg-3">
+                <%- include('right.ejs')%>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

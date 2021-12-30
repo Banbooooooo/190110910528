@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-light color">
     <a class="navbar-brand" href="#">
         <img src="loge.JPG" width="30" height="30" class="d-inline-block align-top" alt="">
-        培训课程报名系统</a>
+        课程报名管理系统</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,19 +14,17 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= username%></a>
+                    <%=username%></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="MyInfo">我的信息</a>
-                    <a class="dropdown-item" href="">我的课表</a>
-                    <a class="dropdown-item" href="updatepwd.jsp">修改密码</a>
+                    <a class="dropdown-item" href="/mycource">我的课表</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item"  href="/loginorreg">登录/注册</a>
-                    <a class="dropdown-item" href="Logout">注销</a>
+                    <a class="dropdown-item" href="/logout">注销</a>
                 </div>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="post" action="QueryUser">
-            <input class="form-control mr-sm-2" type="search" placeholder="${search!=null?search:'Search'}"
+            <input class="form-control mr-sm-2" type="search" placeholder=""
                 aria-label="Search" name="search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>

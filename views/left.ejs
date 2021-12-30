@@ -4,29 +4,10 @@
     <div class="accordion " id="accordionExample">
         <div class="card">
             <div class="card-header color">
-                <a class="btn btn-link collapsed" href="index.jsp">首页</a>
+                <a class="btn btn-link collapsed" href="/index">首页</a>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header color" id="headingOne">
-                <a class="btn btn-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
-                    aria-expanded="false" aria-controls="collapseOne">个人中心</a>
-            </div>
-
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                    <a href="login.jsp"> 用户登录</a>
-                </div>
-                <hr class="my-0">
-                <div class="card-body">
-                    <a href="reg.jsp">用户注册</a>
-                </div>
-                <hr class="my-0">
-                <div class="card-body">
-                    <a href="qr_ajax.jsp">生成个人二维码</a>
-                </div>
-            </div>
-        </div>
+     
         <div class="card">
             <div class="card-header color" id="headingTwo">
                 <a class="btn btn-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -34,12 +15,12 @@
             </div>
 
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <a href="release.jsp">课程创建</a>
                 </div>
-                <hr class="my-0">
+                <hr class="my-0"> -->
                 <div class="card-body">
-                    <a href="AllCourse?page=1">课程修改</a>
+                    <a href="/application">课程教室申请</a>
                 </div>
             </div>
         </div>
@@ -54,16 +35,14 @@
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                 data-parent="#accordionExample">
                 <div class="card-body">
-                    <a href="AllCourse?page=1">课程列表</a>
+                    <a href="/cource">课程查询</a>
                 </div>
+                <!-- <div class="card-body">
+                    <a href="AllUser">用户查询</a>
+                </div> -->
                 <div class="card-body">
-                    <a href="AllUser">用户列表</a>
+                    <a href="/applicationlist">课程教室查询</a>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header color" id="headingOne">
-                <a class="btn btn-link collapsed" href="Logout">登出</a>
             </div>
         </div>
     </div>
