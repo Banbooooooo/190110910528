@@ -19,7 +19,7 @@
 			<div class="col-lg-7" style="background-color: #e3f2fd;padding:1rem;text-align:center;">
 			<h4>课程申请教室列表</h4>
 				<div class="card">
-					<div class="card-body">
+					<div class="card-body" >
 						<table class="table">
 							<thead style="background-color: #e3f2fd;">
 								<tr>
@@ -33,7 +33,7 @@
 
 							<tbody>
                                 <% for(var i=0;i<applications.length;i++){ %>
-									<tr id="cla${i.count}">
+									<tr id="app<%=i+1%>">
 										<th scope="row"><%= i+1%></th>
 										<th><%= applications[i].cource[0].name %></th>
 										<td><%= applications[i].classroom[0].address%></td>
@@ -45,16 +45,15 @@
                                 <% } %>
 							</tbody>
 						</table>
-								<nav aria-label="Page navigation example">
+						<nav aria-label="Page navigation example" >
 							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#"
-									id="btnp">Previous</a></li>
-								<c:forEach begin="1" end="${Math.ceil(classrooms.size()/5)}" var="i">
-									<li class="page-item"><a class="page-link" href="#"
-										id="btn${i}">${i}</a></li>
-								</c:forEach>
-								<li class="page-item"><a class="page-link" href="#"
-									id="btnn">Next</a></li>
+								<li class="page-item"><a class="page-link" href="#" id="btnp">Previous</a></li>
+								<% for(var i=1;i <=Math.ceil(applications.length/5);i++) {%>
+									<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="btn('<%=i%>');">
+											<%=i%>
+										</a></li>
+									<% } %>
+										<li class="page-item"><a class="page-link" href="#" id="btnn">Next</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -69,6 +68,39 @@
 
 </body>
 <script>
+	$(document).ready(function () {
+		var page = 1;
+		var pagesize = 5;
+		var listsize = '<%= applications.length%>';
+		var pages = Math.ceil(listsize / pagesize);
+		change_page(page);
+		function change_page(page) {
+			for (var i = 1; i <= listsize; i++) {
+				if (i >= (page - 1) * pagesize + 1 && i <= (page - 1) * pagesize + pagesize)
+					$("#app" + i).show();
+				else
+					$("#app" + i).hide();
+			}
+		}
+		btn= function (p){
+			page=p;
+			change_page(p);
+		}
+
+		$("#btnp").click(function () {
+			if (page > 1) {
+				page--;
+				change_page(page);
+			}
+		});
+		$("#btnn").click(function () {
+			if (page < pages) {
+				page++;
+				change_page(page);
+			}
+		});
+	});
 
 </script>
+
 </html>

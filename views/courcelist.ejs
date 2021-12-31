@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>课程列表</title>
-<%- include('script.ejs')%>
+	<meta charset="utf-8">
+	<title>课程列表</title>
+	<%- include('script.ejs')%>
 </head>
+
 <body>
 	<div class="container">
 
-		<div id="header"><%- include('header.ejs')%></div>
+		<div id="header">
+			<%- include('header.ejs')%>
+		</div>
 
 		<!-- 内容 -->
 		<div class="row" style="margin-top: 10px">
-            <div id="left" class="col-lg-2"><%- include('left.ejs')%></div>
+			<div id="left" class="col-lg-2">
+				<%- include('left.ejs')%>
+			</div>
 
-			<div class="col-lg-7 jumbotron"
-				style="background-color: #e3f2fd; padding: 1rem; text-align: center;">
+			<div class="col-lg-7 jumbotron" style="background-color: #e3f2fd; padding: 1rem; text-align: center;">
 				<h4>课程列表</h4>
 				<div class="card">
 					<div class="card-body">
@@ -32,43 +37,51 @@
 								</tr>
 							</thead>
 
-							<tbody >
-                                <% for(var i=0;i<cources.length;i++){ %>
-                                    <tr id="cou>">
-										<th scope="row"><%=i+1%></th>
-										<td><%=cources[i]._doc.name%></td>
-										<td><%=cources[i]._doc.grade%></td>
-										<td><%=cources[i]._doc.teacher%></td>
-                                       
-										<% if(!flag[i]){ %>
-						
-											<td><a class="btn btn-outline-danger"
-												href="/regcource?flag=0&cid=<%= cources[i]._doc._id %>">报名</a></td>
-										
-                                        <% } %>									
-										<% if(flag[i]){ %>
-											<td><a class="btn btn-outline-primary"
-												href="/regcource">取消</a></td>
-                                         <% } %>	
+							<tbody>
+								<% for(var i=0;i<cources.length;i++){ %>
+									<tr id="cou<%=i+1%>">
+										<th scope="row">
+											<%=i+1%>
+										</th>
+										<td>
+											<%=cources[i]._doc.name%>
+										</td>
+										<td>
+											<%=cources[i]._doc.grade%>
+										</td>
+										<td>
+											<%=cources[i]._doc.teacher%>
+										</td>
 
-										
-										<td><a class="btn btn-outline-success"
-											href="CourceInfo?kc_id=${cource.kc_id}">详情</a></td>
+										<% if(!flag[i]){ %>
+
+											<td><a class="btn btn-outline-danger"
+													href="/regcource?flag=0&cid=<%= cources[i]._doc._id %>">报名</a></td>
+
+											<% } %>
+												<% if(flag[i]){ %>
+													<td><a class="btn btn-outline-primary"
+															href="/regcource?flag=1&cid=<%= cources[i]._doc._id %>">取消</a>
+													</td>
+													<% } %>
+
+
+														<td><a class="btn btn-outline-success"
+																href="/courceuser?cid=<%= cources[i]._doc._id%>">详情</a></td>
 									</tr>
-                               <% } %>
-															
+									<% } %>
+
 							</tbody>
 						</table>
 						<nav aria-label="Page navigation example">
 							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#"
-									id="btnp">Previous</a></li>
-								<c:forEach begin="1" end="${Math.ceil(cources.size()/5)}" var="i">
-									<li class="page-item"><a class="page-link" href="#"
-										id="btn${i}">${i}</a></li>
-								</c:forEach>
-								<li class="page-item"><a class="page-link" href="#"
-									id="btnn">Next</a></li>
+								<li class="page-item"><a class="page-link" href="#" id="btnp">Previous</a></li>
+								<% for(var i=1;i <=Math.ceil(cources.length/5);i++) {%>
+									<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="btn('<%=i%>');">
+											<%=i%>
+										</a></li>
+									<% } %>
+										<li class="page-item"><a class="page-link" href="#" id="btnn">Next</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -76,12 +89,47 @@
 
 			</div>
 
-            <div id="right" class="col-lg-3"><%- include('right.ejs')%></div>
+			<div id="right" class="col-lg-3">
+				<%- include('right.ejs')%>
+			</div>
 		</div>
 
 	</div>
 </body>
 <script>
+	$(document).ready(function () {
+		var page = 1;
+		var pagesize = 5;
+		var listsize = '<%= cources.length%>';
+		var pages = Math.ceil(listsize / pagesize);
+		change_page(page);
+		function change_page(page) {
+			for (var i = 1; i <= listsize; i++) {
+				if (i >= (page - 1) * pagesize + 1 && i <= (page - 1) * pagesize + pagesize)
+					$("#cou" + i).show();
+				else
+					$("#cou" + i).hide();
+			}
+		}
+		btn= function (p){
+			page=p;
+			change_page(p);
+		}
+
+		$("#btnp").click(function () {
+			if (page > 1) {
+				page--;
+				change_page(page);
+			}
+		});
+		$("#btnn").click(function () {
+			if (page < pages) {
+				page++;
+				change_page(page);
+			}
+		});
+	});
 
 </script>
+
 </html>

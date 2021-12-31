@@ -4,7 +4,7 @@
     <div class="accordion " id="accordionExample">
         <div class="card">
             <div class="card-header color">
-                <a class="btn btn-link collapsed" href="/index">首页</a>
+                <a type="button" class="btn btn-link collapsed" <%= modalid%> href="/index">首页</a>
             </div>
         </div>
      
@@ -15,12 +15,8 @@
             </div>
 
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <!-- <div class="card-body">
-                    <a href="release.jsp">课程创建</a>
-                </div>
-                <hr class="my-0"> -->
                 <div class="card-body">
-                    <a href="/application">课程教室申请</a>
+                    <a href="/application" <%= modalid%>>课程教室申请</a>
                 </div>
             </div>
         </div>
@@ -35,14 +31,16 @@
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                 data-parent="#accordionExample">
                 <div class="card-body">
-                    <a href="/cource">课程查询</a>
+                    <a href="/cource" <%= modalid%>>课程查询</a>
                 </div>
-                <!-- <div class="card-body">
-                    <a href="AllUser">用户查询</a>
-                </div> -->
+                 <div class="card-body">
+                    <a href="/user" <%= modalid%>>用户查询</a>
+                </div> 
                 <div class="card-body">
-                    <a href="/applicationlist">课程教室查询</a>
+                    <a href="/applicationlist"  <%= modalid%>>课程教室查询</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <%- include('modal.ejs')%>

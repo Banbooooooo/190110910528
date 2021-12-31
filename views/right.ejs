@@ -1,7 +1,7 @@
 <!-- 右边栏 -->
 
 <div class="jumbotron color">
-    <div class="display-5">当前已报名课程(<span id="c1">${onlineUserCourse.size()}</span>门)</div>
+    <div class="display-5">当前已报名课程(<span id="c1"><%= mycource.length%></span>门)</div>
     <hr class="my-4">
     <div>
         <table class="table">
@@ -12,14 +12,59 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${onlineUserCourse}" var="course" varStatus="i">
-                    <tr>
-                        <th scope="row">${i.count}</th>
-                        <td>${course.course_name}</td>
-                </c:forEach>
+                    <% for(var i=0;i<mycource.length;i++){ %>
+                         <tr id="my<%=i+1%>">
+                        <th scope="row"><%=i+1%></th>
+                        <td><%=mycource[i].cource[0].name%></td>
+                        </tr>
+                    <% } %>
             </tbody>
         </table>
-        <hr class="my-4">
-        <a class="btn btn-outline-primary" id="btn1" href="LoginAction">刷新</a>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#" id="my-btnp"><</a></li>
+                <% for(var i=1;i <=Math.ceil(mycource.length/5);i++) {%>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="mybtn('<%=i%>');">
+                            <%=i%>
+                        </a></li>
+                    <% } %>
+                        <li class="page-item"><a class="page-link" href="#" id="my-btnn">></a></li>
+            </ul>
+        </nav>
     </div>
 </div>
+<script>
+	$(document).ready(function () {
+		var page = 1;
+		var pagesize = 5;
+		var listsize = '<%= mycource.length%>';
+		var pages = Math.ceil(listsize / pagesize);
+		change_page(page);
+		function change_page(page) {
+			for (var i = 1; i <= listsize; i++) {
+				if (i >= (page - 1) * pagesize + 1 && i <= (page - 1) * pagesize + pagesize)
+					$("#my" + i).show();
+				else
+					$("#my" + i).hide();
+			}
+		}
+		mybtn= function (p){
+			page=p;
+			change_page(p);
+		}
+
+		$("#my-btnp").click(function () {
+			if (page > 1) {
+				page--;
+				change_page(page);
+			}
+		});
+		$("#my-btnn").click(function () {
+			if (page < pages) {
+				page++;
+				change_page(page);
+			}
+		});
+	});
+
+</script>

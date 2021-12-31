@@ -4,8 +4,9 @@ const userschema = new Schema({
     username:String,
     password:String,
     sex:String,
-    birth:Date,
+    birth:String,
     department:String,
-    grade:String
+    grade:String,
+    admin:String
 })
 module.exports = mongoose.model('tuser', userschema,'tuser');

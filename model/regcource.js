@@ -1,7 +1,9 @@
 const mongoose=require('./db.js')
 const Schema=mongoose.Schema;
 const regcourceschema = new Schema({
-    uid:String,
+    uid:{
+        type: Schema.Types.ObjectId
+    },
     cid:{
         type: Schema.Types.ObjectId
     }

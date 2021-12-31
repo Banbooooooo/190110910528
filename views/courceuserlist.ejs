@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>课程成员列表</title>
+	<%- include('script.ejs')%>
+</head>
+
+<body>
+	<div class="container">
+
+		<div id="header">
+			<%- include('header.ejs')%>
+		</div>
+
+		<!-- 内容 -->
+		<div class="row" style="margin-top: 10px">
+			<div id="left" class="col-lg-2">
+				<%- include('left.ejs')%>
+			</div>
+
+			<div class="col-lg-7 jumbotron" style="background-color: #e3f2fd; padding: 1rem; text-align: center;">
+				<h4>《<%=courceusers[0].cource[0].name %>》课程成员列表</h4>
+				<div class="card">
+					<div class="card-body">
+						<table class="table">
+							<thead style="background-color: #e3f2fd;">
+								<tr>
+									<th scope="row">序号</th>
+									<th scope="row">用户名</th>
+									<th scope="row">年级</th>
+									<th scope="row">性别</th>
+									<th scope="row">出生日期</th>
+									<th scope="row">所属院系</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<% for(var i=0;i<courceusers.length;i++){ %>
+									<tr id="cou<%=i+1%>">
+										<th scope="row">
+											<%=i+1%>
+										</th>
+										<td>
+											<%=courceusers[i].user[0].username%>
+										</td>
+										<td>
+											<%=courceusers[i].user[0].grade%>
+										</td>
+										<td>
+											<%=courceusers[i].user[0].sex%>
+										</td>
+										<td>
+											<%=courceusers[i].user[0].birth%>
+										</td>
+										<td>
+											<%=courceusers[i].user[0].department%>
+										</td>
+									</tr>
+									<% } %>
+
+							</tbody>
+						</table>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link" href="#" id="btnp">Previous</a></li>
+								<% for(var i=1;i <=Math.ceil(courceusers.length/5);i++) {%>
+									<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="btn('<%=i%>');">
+											<%=i%>
+										</a></li>
+									<% } %>
+										<li class="page-item"><a class="page-link" href="#" id="btnn">Next</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="right" class="col-lg-3">
+				<%- include('right.ejs')%>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script>
+	$(document).ready(function () {
+		var page = 1;
+		var pagesize = 5;
+		var listsize = '<%= courceusers.length%>';
+		var pages = Math.ceil(listsize / pagesize);
+		change_page(page);
+		function change_page(page) {
+			for (var i = 1; i <= listsize; i++) {
+				if (i >= (page - 1) * pagesize + 1 && i <= (page - 1) * pagesize + pagesize)
+					$("#cou" + i).show();
+				else
+					$("#cou" + i).hide();
+			}
+		}
+		btn= function (p){
+			page=p;
+			change_page(p);
+		}
+
+		$("#btnp").click(function () {
+			if (page > 1) {
+				page--;
+				change_page(page);
+			}
+		});
+		$("#btnn").click(function () {
+			if (page < pages) {
+				page++;
+				change_page(page);
+			}
+		});
+	});
+
+</script>
+
+</html>
