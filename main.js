@@ -183,6 +183,7 @@ app.post('/login', (req, res) => {
         }
     })
 })
+//右边栏目
 app.get('/right', (req, res) => {
     const username = req.session.username;
     const uid = mongoose.Types.ObjectId(req.session.uid);
@@ -217,7 +218,7 @@ app.get('/logout', isLogin, (req, res) => {
     req.session.mycource = mycource;
     res.redirect('/loginorreg');
 })
-
+//课程列表页面
 app.get('/cource', isLogin, (req, res) => {
     const username = req.session.username;
     const uid = mongoose.Types.ObjectId(req.session.uid);
@@ -261,6 +262,7 @@ app.get('/cource', isLogin, (req, res) => {
 
     });
 })
+//我的课表页面
 app.get('/mycource', isLogin, (req, res) => {
     const username = req.session.username;
     const uid = mongoose.Types.ObjectId(req.session.uid);
@@ -288,6 +290,7 @@ app.get('/mycource', isLogin, (req, res) => {
         }
     );
 })
+//报名课程
 app.get('/regcource', (req, res) => {
     const r = req.url;
     const flag = r.split('=')[1].split('&')[0];
@@ -314,6 +317,7 @@ function isAdmin(req, res, next) {
         res.redirect('/loginorreg');
     }
 }
+//课程教室申请页面
 app.get('/application',isAdmin, (req, res) => {
     const username = req.session.username;
     const uid = req.session.uid;
@@ -336,6 +340,7 @@ app.get('/application',isAdmin, (req, res) => {
         });
     });
 });
+//课程申请教室
 app.post('/appliclassroom', (req, res) => {
     const r = req.body;
     const cid = r.cource;
@@ -346,6 +351,7 @@ app.post('/appliclassroom', (req, res) => {
     });
     res.redirect('/applicationlist');
 })
+//课程教室申请列表页面
 app.get('/applicationlist', isLogin, (req, res) => {
     const username = req.session.username;
     const uid = req.session.uid;
@@ -375,6 +381,7 @@ app.get('/applicationlist', isLogin, (req, res) => {
         })
 
 })
+//课程报名的所有成员列表页面
 app.get('/courceuser', isLogin, (req, res) => {
     const username = req.session.username;
     const uid = req.session.uid;
@@ -411,6 +418,7 @@ app.get('/courceuser', isLogin, (req, res) => {
         })
 
 })
+//所有用户列表页面
 app.get('/user', isLogin, (req, res) => {
     const username = req.session.username;
     const uid = req.session.uid;
@@ -423,4 +431,4 @@ app.get('/user', isLogin, (req, res) => {
     })
 
 })
-app.listen(3004);
+app.listen(10528);
