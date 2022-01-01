@@ -218,9 +218,9 @@ g）课程申请教室列表页面：applicationlist.ejs
 
 a）白天黑夜切换
 
-![image-20211231233022982](/home/user1/00project/190110910528/image-20211231233022982.png)
+![image-20211231233022982](photos/image-20211231233022982.png)
 
-![image-20211231233008676](/home/user1/00project/190110910528/image-20211231233008676.png)
+![image-20211231233008676](photos/image-20211231233008676.png)
 
 # 3、开发日记（与commit对应）
 
