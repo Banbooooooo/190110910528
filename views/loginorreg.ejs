@@ -9,8 +9,10 @@
 	
 </head>
 
-<body>
-	<div class="container">
+<body <%=backgroundcolor%>>
+	
+<%- include('star.ejs')%>
+	<div class="container" >
 
 		<div id="header"><%- include('header.ejs')%></div>
 
@@ -18,7 +20,7 @@
 		<div class="row" style="margin-top: 10px">
 
 			<div id="left" class="col-lg-2"><%- include('left.ejs')%></div>
-			<div class="col-lg-7" style="background-color: #e3f2fd; text-align: center;">
+			<div id="main" class="col-lg-7 color" style=" text-align: center;">
 				<div class="function-group">
 					<div class="function-menu nav">
 						<div id="login-btn" class="menu-item green" style="margin-left: 15rem;">登录</div>

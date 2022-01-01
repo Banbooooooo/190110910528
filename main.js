@@ -35,12 +35,12 @@ const tappliclassroom = require('./model/appliclassroom.js');
 tuser.find((err, data) => {
     if (data.length == 0) {
         tuser.insertMany([
-            { username: 'abc', password: '123456', sex: '男', birth: moment().format('2001-03-01'), department: '信息管理与人工智能学院', grade: '2019级' ,admin:'0'},
-            { username: 'def', password: '123456', sex: '女', birth: moment().format('2002-06-01'), department: '信息管理与人工智能学院', grade: '2020级' ,admin:'0'},
-            { username: 'ABC', password: '123456', sex: '男', birth: moment().format('2002-05-01'), department: '信息管理与人工智能学院', grade: '2021级' ,admin:'0'},
-            { username: 'DEF', password: '123456', sex: '女', birth: moment().format('2000-03-01'), department: '信息管理与人工智能学院', grade: '2019级' ,admin:'0'},
-            { username: 'WQL', password: '123456', sex: '女', birth: moment().format('2001-07-01'), department: '信息管理与人工智能学院', grade: '2019级' ,admin:'0'},
-            { username: 'admin', password: '123456', sex: '男', birth: moment().format('2001-03-03'), department: '信息管理与人工智能学院', grade: '2021级' ,admin:'1'},
+            { username: 'abc', password: '123456', sex: '男', birth: moment().format('2001-03-01'), department: '信息管理与人工智能学院', grade: '2019级', admin: '0' },
+            { username: 'def', password: '123456', sex: '女', birth: moment().format('2002-06-01'), department: '信息管理与人工智能学院', grade: '2020级', admin: '0' },
+            { username: 'ABC', password: '123456', sex: '男', birth: moment().format('2002-05-01'), department: '信息管理与人工智能学院', grade: '2021级', admin: '0' },
+            { username: 'DEF', password: '123456', sex: '女', birth: moment().format('2000-03-01'), department: '信息管理与人工智能学院', grade: '2019级', admin: '0' },
+            { username: 'WQL', password: '123456', sex: '女', birth: moment().format('2001-07-01'), department: '信息管理与人工智能学院', grade: '2019级', admin: '0' },
+            { username: 'admin', password: '123456', sex: '男', birth: moment().format('2001-03-03'), department: '信息管理与人工智能学院', grade: '2021级', admin: '1' },
         ]);
     }
 })
@@ -99,13 +99,30 @@ app.get('/', (req, res) => {
     req.session.mycource = mycource;
     req.session.modalid = '';
     req.session.modalcontent = '';
-    req.session.errmsg='';
+    req.session.errmsg = '';
+    req.session.backgroundcolor = 'style=background:#fff';
+    req.session.btncolor = 'dark';
+    req.session.btntext = '黑夜';
     res.redirect('/index');
 });
+//背景白天黑夜切换
+app.get('/darkorlight', (req, res) => {
+    if (req.session.btntext == '黑夜') {
+        req.session.backgroundcolor = 'style=background:#000';
+        req.session.btncolor = 'light';
+        req.session.btntext = '白天';
+    }
+    else {
+        req.session.backgroundcolor = 'style=background:#fff';
+        req.session.btncolor = 'dark';
+        req.session.btntext = '黑夜';
+    }
+    res.redirect('/' + req.headers.referer.split('/')[3]);
+})
 //判断是否登录
 function isLogin(req, res, next) {
     const username = req.session.username;
-    req.session.errmsg='';
+    req.session.errmsg = '';
     if (username != '未登录') next();
     else {
         req.session.modalid = "data-target=\#myModal\ data-toggle=\modal";
@@ -119,7 +136,10 @@ app.get('/index', isLogin, (req, res) => {
     const mycource = req.session.mycource;
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
-    res.render('index', { username, mycource, modalid, modalcontent });
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
+    res.render('index', { username, mycource, modalid, modalcontent, backgroundcolor, btncolor, btntext });
 });
 //登录注册页面
 app.get('/loginorreg', (req, res) => {
@@ -129,13 +149,16 @@ app.get('/loginorreg', (req, res) => {
     const modalid = req.session.modalid;
     const modalidlogin = req.session.modalidlogin;
     const modalcontent = req.session.modalcontent;
-    const errmsg= req.session.errmsg;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const errmsg = req.session.errmsg;
+    const btntext = req.session.btntext;
     tdepartment.find((err, data, count) => {
         if (err) {
             console.log(err);
         }
         const departments = data;
-        res.render('loginorreg', { username, departments, mycource, modalid, modalcontent,modalidlogin,errmsg});
+        res.render('loginorreg', { username, departments, mycource, modalid, modalcontent, modalidlogin, errmsg, backgroundcolor, btncolor, btntext });
     });
 });
 //注册
@@ -160,25 +183,25 @@ app.post('/login', (req, res) => {
         if (err) {
             console.log(err);
         }
-        if (data.length>0) {
+        if (data.length > 0) {
             // console.log(data);
             if (data[0]._doc.password == password) {
                 req.session.username = name;
                 req.session.uid = data[0]._doc._id;
-                req.session.admin=data[0]._doc.admin;
+                req.session.admin = data[0]._doc.admin;
                 req.session.modalid = '';
                 req.session.modalcontent = '';
                 res.redirect('/right');
                 res.end();
             }
-            else{
+            else {
                 console.log("123");
-                req.session.errmsg='密码错误！！！';
+                req.session.errmsg = '密码错误！！！';
                 res.redirect('/loginorreg');
             }
         }
         else {
-            req.session.errmsg='用户不存在，请注册！！！';
+            req.session.errmsg = '用户不存在，请注册！！！';
             res.redirect('/loginorreg');
         }
     })
@@ -189,6 +212,9 @@ app.get('/right', (req, res) => {
     const uid = mongoose.Types.ObjectId(req.session.uid);
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tregcource.aggregate(
         [{
             $match: {
@@ -206,7 +232,7 @@ app.get('/right', (req, res) => {
         (err, data) => {
             const mycource = data;
             req.session.mycource = mycource;
-            res.render('index', { username, mycource, modalid, modalcontent });
+            res.render('index', { username, mycource, modalid, modalcontent , backgroundcolor, btncolor, btntext });
         }
     );
 })
@@ -224,6 +250,9 @@ app.get('/cource', isLogin, (req, res) => {
     const uid = mongoose.Types.ObjectId(req.session.uid);
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tcource.find((err, data, count) => {
         if (err) console.log(err);
         const cources = data;
@@ -256,7 +285,7 @@ app.get('/cource', isLogin, (req, res) => {
                     if (f == 1) flag.push(1);
                     else flag.push(0);
                 }
-                res.render('courcelist', { username, cources, flag, mycource, modalid, modalcontent });
+                res.render('courcelist', { username, cources, flag, mycource, modalid, modalcontent, backgroundcolor, btncolor, btntext  });
             }
         );
 
@@ -269,6 +298,9 @@ app.get('/mycource', isLogin, (req, res) => {
     const mycource = req.session.mycource;
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tregcource.aggregate(
         [{
             $match: {
@@ -286,7 +318,7 @@ app.get('/mycource', isLogin, (req, res) => {
         (err, data) => {
             console.log(data);
             const cources = data;
-            res.render('mycource', { username, cources, mycource, modalid, modalcontent });
+            res.render('mycource', { username, cources, mycource, modalid, modalcontent , backgroundcolor, btncolor, btntext });
         }
     );
 })
@@ -311,19 +343,22 @@ app.get('/regcource', (req, res) => {
 })
 function isAdmin(req, res, next) {
     const admin = req.session.admin;
-    if (admin=='1') next();
+    if (admin == '1') next();
     else {
-        req.session.errmsg= '没有权限进行此操作，请登录管理员账户！！！';
+        req.session.errmsg = '没有权限进行此操作，请登录管理员账户！！！';
         res.redirect('/loginorreg');
     }
 }
 //课程教室申请页面
-app.get('/application',isAdmin, (req, res) => {
+app.get('/application', isAdmin, (req, res) => {
     const username = req.session.username;
     const uid = req.session.uid;
     const mycource = req.session.mycource;
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     var cources;
     var classrooms;
     tcource.find((err, data, count) => {
@@ -336,7 +371,7 @@ app.get('/application',isAdmin, (req, res) => {
                 console.log(err);
             }
             classrooms = data;
-            res.render('classroomappli', { username, cources, classrooms, mycource, modalid, modalcontent })
+            res.render('classroomappli', { username, cources, classrooms, mycource, modalid, modalcontent, backgroundcolor, btncolor, btntext  })
         });
     });
 });
@@ -358,6 +393,9 @@ app.get('/applicationlist', isLogin, (req, res) => {
     const mycource = req.session.mycource;
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tappliclassroom.aggregate(
         [{
             $lookup: {
@@ -377,7 +415,7 @@ app.get('/applicationlist', isLogin, (req, res) => {
         }]
         , (err, data) => {
             const applications = data;
-            res.render('applicationlist', { username, applications, mycource, modalid, modalcontent });
+            res.render('applicationlist', { username, applications, mycource, modalid, modalcontent, backgroundcolor, btncolor, btntext  });
         })
 
 })
@@ -389,6 +427,9 @@ app.get('/courceuser', isLogin, (req, res) => {
     const cid = mongoose.Types.ObjectId(req.url.split('=')[1]);
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tregcource.aggregate([
         {
             $match: {
@@ -414,7 +455,7 @@ app.get('/courceuser', isLogin, (req, res) => {
     ],
         (err, data) => {
             const courceusers = data;
-            res.render('courceuserlist', { username, courceusers, mycource, modalid, modalcontent });
+            res.render('courceuserlist', { username, courceusers, mycource, modalid, modalcontent , backgroundcolor, btncolor, btntext });
         })
 
 })
@@ -425,9 +466,12 @@ app.get('/user', isLogin, (req, res) => {
     const mycource = req.session.mycource;
     const modalid = req.session.modalid;
     const modalcontent = req.session.modalcontent;
+    const backgroundcolor = req.session.backgroundcolor;
+    const btncolor = req.session.btncolor;
+    const btntext = req.session.btntext;
     tuser.find((err, data) => {
         const users = data;
-        res.render('userlist', { username, users, mycource, modalid, modalcontent });
+        res.render('userlist', { username, users, mycource, modalid, modalcontent , backgroundcolor, btncolor, btntext });
     })
 
 })

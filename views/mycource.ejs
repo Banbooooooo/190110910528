@@ -5,7 +5,9 @@
 <title>我的课程</title>
 <%- include('script.ejs')%>
 </head>
-<body>
+<body <%=backgroundcolor%>>
+	<%- include('star.ejs')%>
+
 	<div class="container">
 
 		<div id="header"><%- include('header.ejs')%></div>
@@ -14,7 +16,7 @@
 		<div class="row" style="margin-top: 10px">
             <div id="left" class="col-lg-2"><%- include('left.ejs')%></div>
 
-			<div class="col-lg-7 jumbotron"
+			<div id="main" class="col-lg-7 jumbotron"
 				style="background-color: #e3f2fd; padding: 1rem; text-align: center;">
 				<h4>我的课程</h4>
 				<div class="card">
